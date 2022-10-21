@@ -2,11 +2,11 @@ package collection.reworks;
 
 import java.util.Arrays;
 
-public class CustomList<E> {
+public class List<E> {
     private static final Object[] EMPTY_DATA = new Object[0];
     private Object[] elementData;
     private int size = 10;
-    public CustomList(int capacity){
+    public List(int capacity){
         if(capacity > 0){
             this.elementData = new Object[capacity];
         }
