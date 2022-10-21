@@ -17,9 +17,9 @@ public class CustomList<E> {
             this.elementData = EMPTY_DATA;
         }
     }
-    private Object[] grow(int minCapacity){
-
-    }
+//    private Object[] grow(int minCapacity){
+//
+//    }
 
     public int size(){
         return this.size;
