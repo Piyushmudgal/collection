@@ -97,5 +97,6 @@ public class CustomList<E> {
             return oldValue;
         }
     }
+
 }
 
