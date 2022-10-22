@@ -1,5 +1,9 @@
 package collection;
 
+
+
+import java.lang.reflect.Array;
+
 public class Arrays {
     static void checkRange(int arrayLength, int startIndex, int endIndex){
         if(startIndex > endIndex){
@@ -126,7 +130,6 @@ public class Arrays {
         }
         return -1;
     }
-
     public static boolean[] copyOf(boolean[] originalArray, int newLength){
         return copyOfRange(originalArray, 0, originalArray.length, newLength);
     }
@@ -255,15 +258,38 @@ public class Arrays {
         }
         return newArray;
     }
+    public static <T> T[] copyOf(T[] originalArray, int newLength) {
+        return (T[]) copyOfRange(originalArray, 0, originalArray.length, newLength, originalArray.getClass());
+    }
+    public static <T> T[] copyOfRange(T[] originalArray, int startIndex, int endIndex, int newLength){
+        return (T[]) copyOfRange(originalArray, startIndex, endIndex, newLength, originalArray.getClass());
+    }
+//    public static <T, U> T[] copyOf(U[] originalArray, int newLength, Class<? extends T[]> newType) {
+//        T[] newArray = (T[]) Array.newInstance(newType.getComponentType(), newLength);
+//        int i;
+//        for(i = 0; i < newLength && i < originalArray.length; i++){
+//            newArray[i] = (T) originalArray[i];
+//        }
+//        //if the new Array is smaller than the new Length
+//        while(i < newLength){
+//            newArray[i++] = null;
+//        }
+//        return newArray;
+//    }
+    public static<T, U> T[] copyOfRange(U[] originalArray, int startIndex, int endIndex, int newLength, Class<? extends T[]> newType){
+        checkRange(originalArray.length, startIndex, endIndex);
+        T[] newArray = (T[]) Array.newInstance(newType.getComponentType(), newLength);
+        int i;
+        for(i = 0; i < newLength && (i + startIndex) < originalArray.length && i < (endIndex - startIndex); i++){
+            newArray[i] = (T) originalArray[i + startIndex];
+        }
+        //if the new Array is smaller than the new Length
+        while(i < newLength){
+            newArray[i++] = null;
+        }
+        return newArray;
+    }
 
-//    public static <T> T[] copyOf(T[] original, int newLength) {
-//        return (T[]) copyOf(original, newLength, original.getClass());
-//    }
-//    public static <T, U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType) {
-//        T[] copy = (T[]) (newType == Object[].class ? new Object[newLength] : (Object[]) Array.newInstance(newType.getComponentType(), newLength));
-//        System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
-//        return copy;
-//    }
     public static boolean equals(boolean[] array1, boolean[] array2){
         if(array1 == array2)
             return true;
