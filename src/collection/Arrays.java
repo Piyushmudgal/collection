@@ -130,6 +130,10 @@ public class Arrays {
         }
         return -1;
     }
+//    public static <T> int  binarySearch(T[] arr, T key){
+//        return binarySearch(arr, 0, arr.length, key);
+//
+//    }
     public static boolean[] copyOf(boolean[] originalArray, int newLength){
         return copyOfRange(originalArray, 0, originalArray.length, newLength);
     }
@@ -289,7 +293,6 @@ public class Arrays {
         }
         return newArray;
     }
-
     public static boolean equals(boolean[] array1, boolean[] array2){
         if(array1 == array2)
             return true;
@@ -671,6 +674,15 @@ public class Arrays {
         fill(array, 0, array.length, value);
     }
     public static void fill(long[] array, int startIndex, int endIndex, long value){
+        checkRange(array.length, startIndex, endIndex);
+        for(int i = startIndex; i < endIndex; i++){
+            array[i] = value;
+        }
+    }
+    public static void fill(Object[] array, Object value){
+        fill(array, 0, array.length, value);
+    }
+    public static void fill(Object[] array, int startIndex, int endIndex, Object value){
         checkRange(array.length, startIndex, endIndex);
         for(int i = startIndex; i < endIndex; i++){
             array[i] = value;
@@ -1090,4 +1102,45 @@ public class Arrays {
         mergeSort(array, startIndex, endIndex - 1);
     }
     //Sorting for Objects
+    private static void mergeSort(Object[] a, int start, int end){
+        if(start < end) {
+            int mid = start + (end - start) / 2;
+            mergeSort(a, start, mid);
+            mergeSort(a, mid + 1, end);
+            merge(a, start, mid, end);
+        }
+    }
+    private static void merge(Object[] a, int start, int mid, int end){
+        int leftLength = mid - start + 1;
+        int rightLength = end - mid;
+
+        Object[] leftArray;
+        Object[] rightArray;
+        leftArray = copyOfRange(a, start, start + leftLength, leftLength);
+        rightArray = copyOfRange(a, mid + 1, mid + 1 + rightLength, rightLength);
+        int i = 0, j = 0, k = start;
+        while(i < leftLength && j < rightLength){
+            if(((Comparable)leftArray[i]).compareTo(rightArray[j]) < 0){
+                a[k++] = leftArray[i++];
+            }
+            else {
+                a[k++] = rightArray[j++];
+            }
+        }
+        if(i < leftLength || j < rightLength){
+            while(i < leftLength){
+                a[k++] = leftArray[i++];
+            }
+            while(j < rightLength){
+                a[k++] = rightArray[j++];
+            }
+        }
+    }
+    public static void sort(Object[] array){
+        sort(array, 0, array.length);
+    }
+    public static void sort(Object[] array, int startIndex, int endIndex){
+        checkRange(array.length, startIndex, endIndex);
+        mergeSort(array, startIndex, endIndex - 1);
+    }
 }
