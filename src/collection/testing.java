@@ -1,5 +1,6 @@
 package collection;
 
+
 public class testing {
     public static void main(String[] args) {
 //        Character[] arr = {'a', 'z', 'b', 'A', 'B', '1'};
@@ -21,6 +22,7 @@ public class testing {
 //        System.out.println(Arrays.binarySearch(ar, 'Z'));
         System.out.println(Arrays.toString(arr));
 //        System.out.println(Arrays.toString(ar));
+//        System.out.println(Arrays.toString(arr));
 
     }
 }

@@ -1,8 +1,11 @@
 package collection.reworks;
 
-import java.util.Arrays;
+import collection.Arrays;
 
-public class List<E> {
+//import java.util.Arrays;
+
+
+public class List {
     private static final Object[] EMPTY_DATA = new Object[0];
     private Object[] elementData;
     private int size = 10;
@@ -73,9 +76,9 @@ public class List<E> {
         }
         return -1;
     }
-    public Object[] toArray(){
-        return Arrays.copyOf(this.elementData, this.size);
-    }
+//    public Object[] toArray(){
+//        return collection.Arrays.copyOf(this.elementData, this.size);
+//    }
     E elementData(int index){
         return (E) this.elementData[index];
     }

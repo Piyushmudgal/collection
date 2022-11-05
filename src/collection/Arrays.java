@@ -3,6 +3,7 @@ package collection;
 
 
 import java.lang.reflect.Array;
+import java.util.Comparator;
 
 public class Arrays {
     static void checkRange(int arrayLength, int startIndex, int endIndex){
@@ -124,16 +125,34 @@ public class Arrays {
         while(start <= end){
             int mid = start + (end - start) / 2;
             Comparable midEle = (Comparable)arr[mid];
-            if (midEle.compareTo(target) == 0)     return mid;
-            else if(midEle.compareTo(target) > 0)    end = mid-1;
+            int ctemp = midEle.compareTo(target);
+            if (ctemp == 0)     return mid;
+            else if(ctemp > 0)    end = mid-1;
             else    start=mid+1;
         }
         return -1;
     }
-//    public static <T> int  binarySearch(T[] arr, T key){
-//        return binarySearch(arr, 0, arr.length, key);
-//
-//    }
+    public static <T> int  binarySearch(T[] arr, T target, Comparator<? super T> c){
+        return binarySearch(arr, 0, arr.length, target, c);
+    }
+    public static <T> int binarySearch(T[] arr, int startIndex, int endIndex, T target, Comparator<? super T> c){
+        if(c == null){
+            return binarySearch(arr, startIndex, endIndex, target);
+        }
+        else {
+            checkRange(arr.length, startIndex, endIndex);
+            int start = startIndex, end = endIndex - 1;
+            while (start <= end) {
+                int mid = start + (end - start) / 2;
+                T midEle = arr[mid];
+                int ctemp = c.compare(midEle, target);
+                if (ctemp == 0) return mid;
+                else if (ctemp > 0) end = mid - 1;
+                else start = mid + 1;
+            }
+            return -1;
+        }
+    }
     public static boolean[] copyOf(boolean[] originalArray, int newLength){
         return copyOfRange(originalArray, 0, originalArray.length, newLength);
     }
@@ -268,18 +287,6 @@ public class Arrays {
     public static <T> T[] copyOfRange(T[] originalArray, int startIndex, int endIndex, int newLength){
         return (T[]) copyOfRange(originalArray, startIndex, endIndex, newLength, originalArray.getClass());
     }
-//    public static <T, U> T[] copyOf(U[] originalArray, int newLength, Class<? extends T[]> newType) {
-//        T[] newArray = (T[]) Array.newInstance(newType.getComponentType(), newLength);
-//        int i;
-//        for(i = 0; i < newLength && i < originalArray.length; i++){
-//            newArray[i] = (T) originalArray[i];
-//        }
-//        //if the new Array is smaller than the new Length
-//        while(i < newLength){
-//            newArray[i++] = null;
-//        }
-//        return newArray;
-//    }
     public static<T, U> T[] copyOfRange(U[] originalArray, int startIndex, int endIndex, int newLength, Class<? extends T[]> newType){
         checkRange(originalArray.length, startIndex, endIndex);
         T[] newArray = (T[]) Array.newInstance(newType.getComponentType(), newLength);
